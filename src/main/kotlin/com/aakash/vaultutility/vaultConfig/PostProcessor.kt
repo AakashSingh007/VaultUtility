@@ -1,0 +1,60 @@
+package com.aakash.vaultutility.vaultConfig
+
+import com.fasterxml.jackson.core.type.TypeReference
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.aakash.vaultutility.utils.*
+import com.aakash.vaultutility.networking.CommonNetworkingClient
+import org.json.JSONObject
+import org.springframework.boot.SpringApplication
+import org.springframework.boot.env.EnvironmentPostProcessor
+import org.springframework.core.env.ConfigurableEnvironment
+import org.springframework.core.env.PropertiesPropertySource
+import java.util.*
+
+class PostProcessor : EnvironmentPostProcessor {
+    private val mapper = jacksonObjectMapper()
+    private val commonNetworkingClient = CommonNetworkingClient(mapper)
+
+    override fun postProcessEnvironment(env: ConfigurableEnvironment, application: SpringApplication) {
+        try {
+            val tokenInitializer = TokenInitializer(commonNetworkingClient, env )
+
+            val vaultUrl = env.getProperty(ENV_VAULT_URL)!!
+            val vaultSecretBase = env.getProperty(ENV_VAULT_SECRET_BASE)!!
+            val activeProfile = env.activeProfiles.first().uppercase()
+            val appName = env.getProperty("vault.appName")!!
+
+            val token = tokenInitializer.retrieveVaultToken()
+
+            val props = Properties()
+
+            val configuredPaths = env.getProperty("vault.secret-paths")?.split(",")?.map { it.trim() } ?: emptyList()
+
+            val secretPaths = configuredPaths.map { "$it/$activeProfile" }
+
+//            val secretPaths = listOf("$PRIMARY_DB/$activeProfile", "$SECONDARY_DB/$activeProfile")
+            for (path in secretPaths) {
+                val url = "$vaultUrl/$vaultSecretBase/$appName/$path"
+                val secrets = fetchSecretFromVault(url, token)
+                secrets.forEach { (key, value) -> props[key] = value }
+            }
+
+            env.propertySources.addFirst(PropertiesPropertySource("vaultSecrets", props))
+
+        } catch (ex: Exception) {
+            println("Error in Vault PostProcessor: ${ex.message}")
+        }
+    }
+
+    private fun fetchSecretFromVault(url: String, token: String): Map<String, String> {
+        val response = commonNetworkingClient.NewRequest()
+            .addHeader("X-Vault-Token", token)
+            .getCall(url)
+            .send()
+
+        val responseBody = response.stringEntity
+        val json = JSONObject(responseBody).getJSONObject(ENCRYPT_DECRYPT_REQUEST_KEY).getJSONObject(ENCRYPT_DECRYPT_REQUEST_KEY)
+
+        return mapper.readValue(json.toString(), object : TypeReference<Map<String, String>>() {})
+    }
+}
