@@ -53,15 +53,14 @@ publishing {
             version = project.version.toString()
         }
     }
-//    AakashSingh007
-//    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
+
     repositories {
         maven {
             name = "GitHubPackages"
             url = uri("https://maven.pkg.github.com/AakashSingh007/VaultUtility")
             credentials {
-                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
-                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+                username = project.findProperty("gpr.user") as String? ?: ""
+                password = project.findProperty("gpr.key") as String? ?: ""
             }
         }
     }
