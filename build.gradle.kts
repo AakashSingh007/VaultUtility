@@ -1,13 +1,13 @@
 plugins {
-    kotlin("jvm") version "1.6.21"           // Compatible with most Kotlin projects
-    kotlin("plugin.spring") version "1.6.21" // Optional: for Spring projects
+    kotlin("jvm") version "1.6.21"
+    kotlin("plugin.spring") version "1.6.21"
     id("io.spring.dependency-management") version "1.0.14.RELEASE"
     id("org.springframework.boot") version "2.7.4" apply false
     id("maven-publish")
 }
 
 group = "com.aakash"
-version = "0.0.1-SNAPSHOT"
+version = "0.0.2-SNAPSHOT"
 description = "VaultUtility - reusable library"
 
 java {
@@ -65,7 +65,6 @@ publishing {
         }
     }
 }
-
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
