@@ -36,7 +36,7 @@ class PostProcessor : EnvironmentPostProcessor {
 
             val props = Properties()
 
-            val configuredPaths = env.getProperty("vault.secret-paths")?.split(",")?.map { it.trim() } ?: emptyList()
+            val configuredPaths = env.getProperty("vault.db-paths")?.split(",")?.map { it.trim() } ?: emptyList()
 
             val secretPaths = configuredPaths.map { "$it/$activeProfile" }
 
