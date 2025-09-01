@@ -3,7 +3,7 @@ package com.aakash.vaultutility.vaultConfig
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.aakash.vaultutility.utils.*
-import com.aakash.vaultutility.networking.CommonNetworkingClient
+import com.aakash.vaultutility.networking.VaultCommonNetworkingClient
 import org.json.JSONObject
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.env.EnvironmentPostProcessor
@@ -13,11 +13,11 @@ import java.util.*
 
 class PostProcessor : EnvironmentPostProcessor {
     private val mapper = jacksonObjectMapper()
-    private val commonNetworkingClient = CommonNetworkingClient(mapper)
+    private val vaultCommonNetworkingClient = VaultCommonNetworkingClient(mapper)
 
     override fun postProcessEnvironment(env: ConfigurableEnvironment, application: SpringApplication) {
         try {
-            val tokenInitializer = TokenInitializer(commonNetworkingClient, env )
+            val tokenInitializer = TokenInitializer(vaultCommonNetworkingClient, env )
 
             val vaultUrl = env.getProperty(ENV_VAULT_URL)!!
             val vaultSecretBase = env.getProperty(ENV_VAULT_SECRET_BASE)!!
@@ -47,7 +47,7 @@ class PostProcessor : EnvironmentPostProcessor {
     }
 
     private fun fetchSecretFromVault(url: String, token: String): Map<String, String> {
-        val response = commonNetworkingClient.NewRequest()
+        val response = vaultCommonNetworkingClient.NewRequest()
             .addHeader("X-Vault-Token", token)
             .getCall(url)
             .send()

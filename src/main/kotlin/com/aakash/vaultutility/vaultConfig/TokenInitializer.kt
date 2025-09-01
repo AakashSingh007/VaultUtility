@@ -1,6 +1,6 @@
 package com.aakash.vaultutility.vaultConfig
 
-import com.aakash.vaultutility.networking.CommonNetworkingClient
+import com.aakash.vaultutility.networking.VaultCommonNetworkingClient
 import com.aakash.vaultutility.utils.*
 import org.springframework.core.env.Environment
 import org.json.JSONObject
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class TokenInitializer(
-    val commonNetworkingClient: CommonNetworkingClient,
+    val vaultCommonNetworkingClient: VaultCommonNetworkingClient,
     val env: Environment,
 ) {
     fun retrieveVaultToken(): String {
@@ -23,7 +23,7 @@ class TokenInitializer(
         }
 
         val loginUrl = "$vaultUrl/$loginBase"
-        val response = commonNetworkingClient.NewRequest()
+        val response = vaultCommonNetworkingClient.NewRequest()
             .postCall(loginUrl, jsonBody)
             .send()
 

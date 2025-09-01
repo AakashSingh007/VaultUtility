@@ -10,12 +10,11 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 
 @Component
-class CommonNetworkingClient(
+class VaultCommonNetworkingClient(
     @Autowired val objectMapper: ObjectMapper
 ) {
 

@@ -1,6 +1,6 @@
 package com.aakash.vaultutility.vaultConfig
 
-import com.aakash.vaultutility.networking.CommonNetworkingClient
+import com.aakash.vaultutility.networking.VaultCommonNetworkingClient
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.aakash.vaultutility.model.Creds
 import com.aakash.vaultutility.utils.*
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component
 @Component
 class CredentialInitializer(
     val env: Environment,
-    val commonNetworkingClient: CommonNetworkingClient,
+    val vaultCommonNetworkingClient: VaultCommonNetworkingClient,
     val mapper: ObjectMapper,
     val tokenManager: TokenManager,
     val vaultProperties: VaultProperties
@@ -44,7 +44,7 @@ class CredentialInitializer(
 
         val credApiUrl = "$vaultUrl/$secretBase/$addr/$partnerName/$credType"
 
-        val response = commonNetworkingClient.NewRequest()
+        val response = vaultCommonNetworkingClient.NewRequest()
             .addHeader(VAULT_TOKEN_HEADER, vaultToken)
             .getCall(credApiUrl)
             .send()
