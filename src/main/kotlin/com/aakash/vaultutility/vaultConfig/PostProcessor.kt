@@ -17,6 +17,15 @@ class PostProcessor : EnvironmentPostProcessor {
 
     override fun postProcessEnvironment(env: ConfigurableEnvironment, application: SpringApplication) {
         try {
+
+            val useVault = env.getProperty("use_vault")?.toBoolean() ?: false
+            println("Vault Utility useVault flag: $useVault")
+
+            if (!useVault) {
+                println("[Vault PostProcessor] Skipping Vault integration due to USE_VAULT=false")
+                return
+            }
+
             val tokenInitializer = TokenInitializer(vaultCommonNetworkingClient, env )
 
             val vaultUrl = env.getProperty(ENV_VAULT_URL)!!

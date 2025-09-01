@@ -17,23 +17,10 @@ class CredentialInitializer(
     val vaultProperties: VaultProperties
 ) {
 
-//    // TODO change to CMS for prod
-//    private val partnerPathMap  = mapOf(
-//        "Google_DNR" to "Common",
-//        "AWS-RABIT" to "Common",
-//        "HFO" to "cms",
-//        "HFOSpring" to "cms",
-//        "RMPro" to "cms",
-//        "Rohit" to "cms",
-//        "Salesforce" to "cms",
-//
-//    )
-
     fun getCredentials(partnerName: String, credType: String): Creds? {
 
         val vaultUrl = env.getProperty(ENV_VAULT_URL)!!
         val secretBase = env.getProperty(ENV_VAULT_SECRET_BASE)!!
-//        val addr = partnerPathMap[partnerName]
         val vaultToken = tokenManager.getToken()
         val addr = vaultProperties.partnerPathMap[partnerName]
 
