@@ -17,7 +17,7 @@ class CredentialInitializer(
     val vaultProperties: VaultProperties
 ) {
 
-    fun getCredentials(partnerName: String, credType: String): Creds? {
+    fun getCredentials(partnerName: String, credType: String): String? {
 
         val vaultUrl = env.getProperty(ENV_VAULT_URL)!!
         val secretBase = env.getProperty(ENV_VAULT_SECRET_BASE)!!
@@ -42,10 +42,11 @@ class CredentialInitializer(
         }
 
         val responseBody = response.stringEntity
-        val json = JSONObject(responseBody).optJSONObject(ENCRYPT_DECRYPT_REQUEST_KEY).optString(ENCRYPT_DECRYPT_REQUEST_KEY)
+        val json = JSONObject(responseBody).optJSONObject(DATA).optString(DATA)
 
-        val cred = mapper.readValue(json, Creds::class.java)
+//        val cred = mapper.readValue(json, Creds::class.java)
 
-        return cred
+//        return cred
+        return json
     }
 }

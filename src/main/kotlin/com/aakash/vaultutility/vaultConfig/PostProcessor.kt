@@ -62,7 +62,7 @@ class PostProcessor : EnvironmentPostProcessor {
             .send()
 
         val responseBody = response.stringEntity
-        val json = JSONObject(responseBody).getJSONObject(ENCRYPT_DECRYPT_REQUEST_KEY).getJSONObject(ENCRYPT_DECRYPT_REQUEST_KEY)
+        val json = JSONObject(responseBody).getJSONObject(DATA).getJSONObject(DATA)
 
         return mapper.readValue(json.toString(), object : TypeReference<Map<String, String>>() {})
     }
