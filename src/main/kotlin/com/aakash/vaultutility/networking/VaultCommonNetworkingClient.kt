@@ -103,8 +103,8 @@ class VaultCommonNetworkingClient(
             request = requestBuilder.build()
 
             printLog("send - Request url: ${request.url}")
-            printLog("send - Request headers: ${objectMapper.writeValueAsString(request.headers)}")
-            printLog("send - Request body: ${objectMapper.writeValueAsString(request.body)}")
+//            printLog("send - Request headers: ${objectMapper.writeValueAsString(request.headers)}")
+//            printLog("send - Request body: ${objectMapper.writeValueAsString(request.body)}")
 
             val localHTTPResponse = LocalHTTPResponse()
 
@@ -115,7 +115,7 @@ class VaultCommonNetworkingClient(
             response.close()
 
             printLog("send - Response code: $responseCode")
-            printLog("send - Response body: $responseString")
+//            printLog("send - Response body: $responseString")
 
             localHTTPResponse.statusCode = responseCode
             localHTTPResponse.stringEntity = responseString

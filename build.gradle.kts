@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.aakash"
-version = "0.0.5-SNAPSHOT"
+version = "0.0.6-SNAPSHOT"
 description = "VaultUtility - reusable library"
 
 java {

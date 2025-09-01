@@ -19,7 +19,6 @@ class PostProcessor : EnvironmentPostProcessor {
         try {
 
             val useVault = env.getProperty("use_vault")?.toBoolean() ?: false
-            println("Vault Utility useVault flag: $useVault")
 
             if (!useVault) {
                 println("[Vault PostProcessor] Skipping Vault integration due to USE_VAULT=false")
