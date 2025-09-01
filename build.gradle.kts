@@ -49,14 +49,20 @@ publishing {
         create<MavenPublication>("mavenJava") {
             from(components["java"])
             groupId = project.group.toString()
-            artifactId = "VaultUtility"
+            artifactId = "vault-utility"
             version = project.version.toString()
         }
     }
+//    AakashSingh007
+//    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
     repositories {
         maven {
-            // use uri() correctly here
-            url = uri("${buildDir}/repo")
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/AakashSingh007/VaultUtility")
+            credentials {
+                username = project.findProperty("gpr.user") as String? ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") as String? ?: System.getenv("GITHUB_TOKEN")
+            }
         }
     }
 }
