@@ -8,14 +8,13 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONObject
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import java.util.concurrent.TimeUnit
 
 
 @Component
 class VaultCommonNetworkingClient(
-    @Autowired val objectMapper: ObjectMapper
+    val objectMapper: ObjectMapper
 ) {
 
     companion object {

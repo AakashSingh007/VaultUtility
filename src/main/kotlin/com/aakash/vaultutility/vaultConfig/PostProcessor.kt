@@ -41,7 +41,6 @@ class PostProcessor : EnvironmentPostProcessor {
 
             val secretPaths = configuredPaths.map { "$it/$activeProfile" }
 
-//            val secretPaths = listOf("$PRIMARY_DB/$activeProfile", "$SECONDARY_DB/$activeProfile")
             for (path in secretPaths) {
                 val url = "$vaultUrl/$vaultSecretBase/$appName/$path"
                 val secrets = fetchSecretFromVault(url, token)

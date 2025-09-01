@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "com.aakash"
-version = "0.0.4-SNAPSHOT"
+version = "0.0.5-SNAPSHOT"
 description = "VaultUtility - reusable library"
 
 java {
@@ -32,14 +32,13 @@ dependencies {
     // JSON handling
     implementation("org.json:json:20240303")
 
-    // Optional Spring support
+    // Spring support
     implementation("org.springframework.boot:spring-boot-starter:2.7.4")
     implementation("org.springframework.boot:spring-boot-starter-json:2.7.4")
 }
 
 kotlin {
     jvmToolchain {
-        // Use Java 11
         (this as JavaToolchainSpec).languageVersion.set(JavaLanguageVersion.of(11))
     }
 }

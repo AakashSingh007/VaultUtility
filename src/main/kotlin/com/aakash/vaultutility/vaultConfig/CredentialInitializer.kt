@@ -1,8 +1,6 @@
 package com.aakash.vaultutility.vaultConfig
 
 import com.aakash.vaultutility.networking.VaultCommonNetworkingClient
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.aakash.vaultutility.model.Creds
 import com.aakash.vaultutility.utils.*
 import org.json.JSONObject
 import org.springframework.core.env.Environment
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Component
 class CredentialInitializer(
     val env: Environment,
     val vaultCommonNetworkingClient: VaultCommonNetworkingClient,
-    val mapper: ObjectMapper,
     val tokenManager: TokenManager,
     val vaultProperties: VaultProperties
 ) {
@@ -44,9 +41,6 @@ class CredentialInitializer(
         val responseBody = response.stringEntity
         val json = JSONObject(responseBody).optJSONObject(DATA).optString(DATA)
 
-//        val cred = mapper.readValue(json, Creds::class.java)
-
-//        return cred
         return json
     }
 }
